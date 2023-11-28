@@ -1,5 +1,6 @@
-from os import name
+from os import name, remove
 from subprocess import check_output
+from tqdm import tqdm
 
 
 def isWindows():
@@ -31,3 +32,14 @@ def tag_treetagger(lang, file_path, lemmatize=True):
     r = r.decode('utf-8')
     r = r.replace('\r\n', '\n')
     return r
+
+
+def tag_multiple(file_path, input_files, lang):
+    print("tagging...")
+    with open(file_path + ".vert", "a+", encoding="utf-8") as rf:
+        for input_file in tqdm(input_files, total=len(input_files)):
+            rf.write(tag_treetagger(lang, input_file) + "\n")
+            try:
+                remove(input_file)
+            except:
+                pass
