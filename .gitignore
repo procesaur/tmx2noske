@@ -1,3 +1,5 @@
 .idea/
 ItSr23/
 results/
+tmp/
+__pycache__
