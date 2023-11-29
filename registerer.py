@@ -18,8 +18,8 @@ ini_dir = "data/tagged/"
 def generate_registry(name, information, atts, struct, pair_element, lang):
 
     info = {
-        "path": "/home/noske/data/corpora/" + name,
-        "vertical": "/home/noske/data/verticals/" + name,
+        "path": "/home/noske/data/corpora/" + name + "_" + lang,
+        "vertical": "/home/noske/data/verticals/" + name + "_" + lang,
         "encoding": "UTF-8",
         "info": information,
         "maintainer": "JeRTeh",
@@ -31,7 +31,7 @@ def generate_registry(name, information, atts, struct, pair_element, lang):
 
     data_str = '''PATH %s
 VERTICAL "| cat %s/*"
-ENCODING %s
+ENCODING "%s"
 INFO "%s"
 MAINTAINER "%s"
 LANGUAGE "%s"
@@ -65,7 +65,7 @@ ATTRIBUTE tag
 ATTRIBUTE lemma
 
 STRUCTURE doc {
-    ATTRIBUTE %s
+    ATTRIBUTE "%s"
 }
 
 ''' % (info["path"], info["vertical"], info["encoding"], info["info"], info["maintainer"], info["language"],
@@ -81,7 +81,7 @@ STRUCTURE doc {
 
 
 def make_nrattributes_str(att_list):
-    return '\n\tATTRIBUTE '.join(att_list)
+    return '\"\n\tATTRIBUTE \"'.join(att_list)
 
 
 def generate_registries(directory, information, struct, pair_element):

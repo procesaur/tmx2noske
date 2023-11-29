@@ -9,9 +9,9 @@ information = "Parallel Serbian-Italian Corpus"
 struct = ["seg"]
 pair_element = "seg"
 
-split_tmx = False
-vert = False
-tag = False
+split_tmx = True
+vert = True
+tag = True
 registry = True
 
 if split_tmx:

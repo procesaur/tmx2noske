@@ -1,6 +1,7 @@
 from xml.etree import ElementTree
 from os.path import isfile, splitext, isdir
 from os import mkdir
+from unicodedata import normalize
 
 
 filename_column = "id"
@@ -35,7 +36,7 @@ def GenerateXML(metadata, file_path, info, pair_element):
         xml_string = ElementTree.tostring(root, encoding='utf8').decode("utf-8").split(xml_head)[1]
         save_path = file_path.replace(ini_dir, target_dir)
         save_path = splitext(save_path)[0] + "_" + lang + ".xml"
-        with open(save_path, "w", encoding="utf-8") as xf:
+        with open(normalize('NFD', save_path).encode('ASCII', 'ignore'), "w", encoding="utf-8") as xf:
             xf.write(xml_string.replace('<seg>', '\n<seg>'))
 
 
