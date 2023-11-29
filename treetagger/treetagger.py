@@ -1,6 +1,11 @@
-from os import name, remove
+from os import name, listdir, mkdir
+from os.path import splitext, isdir
 from subprocess import check_output
 from tqdm import tqdm
+
+
+ini_dir = "data/verticals/"
+target_dir = "data/tagged/"
 
 
 def isWindows():
@@ -34,12 +39,18 @@ def tag_treetagger(lang, file_path, lemmatize=True):
     return r
 
 
-def tag_multiple(file_path, input_files, lang):
+def tag_multiple(directory):
     print("tagging...")
-    with open(file_path + ".vert", "a+", encoding="utf-8") as rf:
-        for input_file in tqdm(input_files, total=len(input_files)):
-            rf.write(tag_treetagger(lang, input_file) + "\n")
-            try:
-                remove(input_file)
-            except:
-                pass
+
+    if not isdir(target_dir + directory):
+        mkdir(target_dir + directory)
+
+    files = listdir(ini_dir + directory)
+    for x in tqdm(files, total=len(files)):
+        file_path = ini_dir + directory + "/" + x
+        lang = x.split(".vert")[0].rsplit("_", 1)[1]
+
+        save_path = file_path.replace(ini_dir, target_dir)
+        save_path = splitext(save_path)[0] + ".tt"
+        with open(save_path, "w", encoding="utf-8") as sf:
+            sf.write(tag_treetagger(lang, file_path))

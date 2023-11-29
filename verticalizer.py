@@ -2,6 +2,12 @@ from tokenizer import tokenize
 from random import choices
 from string import ascii_lowercase
 from tqdm import tqdm
+from os import listdir, mkdir
+from os.path import splitext, isdir
+
+
+ini_dir = "data/source/"
+target_dir = "data/verticals/"
 
 
 def get_rand():
@@ -9,16 +15,21 @@ def get_rand():
 
 
 def verticalize(file_path):
-    print("verticalizing...")
     with open(file_path, "r", encoding="utf-8") as f:
         text = f.read()
-    pars = ["<doc " + x for x in text.split("<doc ")]
-    del pars[0]
-    chunk_names = []
-    for par in tqdm(pars, total=len(pars)):
-        name = "./tmp/" + get_rand()
-        lines = tokenize(par)
-        with open(name, "w", encoding="utf-8") as t:
-            t.writelines('\n'.join(lines))
-        chunk_names.append(name)
-    return chunk_names
+    lines = tokenize(text)
+    save_path = file_path.replace(ini_dir, target_dir)
+    save_path = splitext(save_path)[0] + ".vert"
+    with open(save_path, "w", encoding="utf-8") as t:
+        t.writelines('\n'.join(lines))
+
+
+def verticalize_multiple(directory):
+    print("verticalizing...")
+
+    if not isdir(target_dir + directory):
+        mkdir(target_dir + directory)
+
+    files = listdir(ini_dir + directory)
+    for x in tqdm(files, total=len(files)):
+        verticalize(ini_dir + directory + "/" + x)

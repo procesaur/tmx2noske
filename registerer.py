@@ -1,3 +1,8 @@
+from os.path import isdir
+from os import mkdir, listdir
+from split_tmx import get_info
+
+
 lang_map = {
         "sr": "Srpski",
         "en": "English",
@@ -6,8 +11,11 @@ lang_map = {
         "it": "Italian"
     }
 
+target_dir = "data/registry/"
+ini_dir = "data/tagged/"
 
-def generate_registry(name, information, lang, atts, struct, pair_element):
+
+def generate_registry(name, information, atts, struct, pair_element, lang):
 
     info = {
         "path": "/home/noske/data/corpora/" + name,
@@ -22,7 +30,7 @@ def generate_registry(name, information, lang, atts, struct, pair_element):
         }
 
     data_str = '''PATH %s
-VERTICAL %s
+VERTICAL "| cat %s/*"
 ENCODING %s
 INFO "%s"
 MAINTAINER "%s"
@@ -68,9 +76,21 @@ STRUCTURE doc {
 
     data_str += "\nALIGNSTRUCT " + pair_element
 
-    with open("registry/" + name, "w", encoding="utf-8") as r:
+    with open(target_dir + name + "/" + name + "_" + lang, "w", encoding="utf-8") as r:
         r.write(data_str)
 
 
 def make_nrattributes_str(att_list):
     return '\n\tATTRIBUTE '.join(att_list)
+
+
+def generate_registries(directory, information, struct, pair_element):
+
+    if not isdir(target_dir + directory):
+        mkdir(target_dir + directory)
+
+    langs = set([x.split(".tt")[0].rsplit("_", 1)[1] for x in listdir(ini_dir + directory)])
+    for lang in langs:
+        generate_registry(directory, information, get_info(directory), struct, pair_element, lang)
+
+
