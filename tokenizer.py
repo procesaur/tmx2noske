@@ -1,7 +1,6 @@
 from re import compile, UNICODE, IGNORECASE, match
 from os import path
 
-
 this_directory = path.dirname(path.abspath(__file__))
 xml = r'</?[šđžćč\-_\w]+( [šđžćč\-_\w]+=["\'].*["\'])*/?>'
 
@@ -49,8 +48,8 @@ langs = {
         'period': r'[1-9][0-9]{0,2}0[\-－﹣﹘―—–‒‑‐᠆־][iи][hх]',
         'initials': r'[A-ZŠĐŽĆČАБВГДЂЕЖЗИЈКЛЉМНЊОПРСТЋУФХЦЧЏШ]\.',
         'order': (
-        'abbrev', 'period', 'num', 'url', 'htmlesc', 'tag', 'mail', 'initials', 'mention', 'hashtag', 'additional',
-        'emoticon', 'word', 'arrow', 'dot', 'space', 'other')
+            'abbrev', 'period', 'num', 'url', 'htmlesc', 'tag', 'mail', 'initials', 'mention', 'hashtag', 'additional',
+            'emoticon', 'word', 'arrow', 'dot', 'space', 'other')
     },
 
 }
@@ -121,7 +120,6 @@ def tokenize_sentences(sentences, keepspace=False):
 
 
 def tokenize(text, keepspace=False):
-
     tokenizer = generate_tokenizer('sr')
     text = text.rstrip()
     text = text.replace("<", "\n<").replace(">", ">\n")

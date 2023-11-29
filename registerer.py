@@ -92,5 +92,3 @@ def generate_registries(directory, information, struct, pair_element):
     langs = set([x.split(".tt")[0].rsplit("_", 1)[1] for x in listdir(ini_dir + directory)])
     for lang in langs:
         generate_registry(directory, information, get_info(directory), struct, pair_element, lang)
-
-

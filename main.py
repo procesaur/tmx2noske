@@ -1,10 +1,10 @@
-from split_tmx import generate_split_files, get_info
+from split_tmx import generate_split_files
 from treetagger.treetagger import tag_multiple
 from verticalizer import verticalize_multiple
 from registerer import generate_registries
 
 
-files_dir = "test" # SerbItaCor3
+files_dir = "SerbItaCor3"
 information = "Parallel Serbian-Italian Corpus"
 struct = ["seg"]
 pair_element = "seg"
@@ -25,4 +25,3 @@ if tag:
 
 if registry:
     generate_registries(files_dir, information, struct, pair_element)
-

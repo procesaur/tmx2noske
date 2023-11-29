@@ -24,8 +24,8 @@ def GenerateXML(metadata, file_path, info, pair_element):
     tmx = ElementTree.parse(file_path)
     langs = [x.attrib[lang_attr] for x in tmx.find('.//tu').findall('tuv')]
 
-    def get_segs(lang):
-        segs = [x.find(pair_element) for x in tmx.findall('.//tuv') if x.attrib[lang_attr] == lang]
+    def get_segs(language):
+        segs = [x.find(pair_element) for x in tmx.findall('.//tuv') if x.attrib[lang_attr] == language]
         return segs
 
     for lang in langs:
