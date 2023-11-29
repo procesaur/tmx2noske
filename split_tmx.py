@@ -17,7 +17,8 @@ target_dir = "data/source/"
 def create_root(info, metadata):
     root = ElementTree.Element("doc")
     for key, value in zip(info, metadata):
-        root.set(key, value)
+        root.set(normalize('NFD', key).encode('ASCII', 'ignore').decode("utf-8"),
+                 value)
     return root
 
 
@@ -64,6 +65,6 @@ def generate_split_files(directory, pair):
 def get_info(directory):
     with open(ini_dir + directory + "/" + metadata_filename, "r", encoding="utf8") as md:
         metadata_lines = [[y.rstrip() for y in x.split(separator)] for x in md.readlines() if x]
-    info = metadata_lines[0]
+    info = [normalize('NFD', x).encode('ASCII', 'ignore').decode("utf-8") for x in metadata_lines[0]]
 
     return info
