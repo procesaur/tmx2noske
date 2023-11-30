@@ -27,6 +27,7 @@ def generate_registry(name, information, atts, struct, pair_element, lang):
         "infohref.path": "",
         "tagsetdoc.path": "",
         "doc_attributes": atts,
+        "name": name
         }
 
     data_str = '''PATH %s
@@ -37,6 +38,7 @@ MAINTAINER "%s"
 LANGUAGE "%s"
 INFOHREF "%s"
 TAGSETDOC "%s"
+NAME "%s"
 
 ATTRIBUTE lc {
     LABEL "word (lowercase)"
