@@ -21,7 +21,7 @@ def verticalize(file_path):
     save_path = file_path.replace(ini_dir, target_dir)
     save_path = splitext(save_path)[0] + ".vert"
     with open(save_path, "w", encoding="utf-8") as t:
-        t.writelines('\n'.join(lines))
+        t.writelines('\n'.join(lines).replace("<seg>\n</seg>", "<seg>\n*\n</seg>"))
 
 
 def verticalize_multiple(directory):
